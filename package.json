@@ -1,0 +1,14 @@
+{
+  "name": "record-and-upload",
+  "version": "1.0.0",
+  "description": "MediaStream Recording and upload to server via file-upload",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "author": "MrOrz",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
