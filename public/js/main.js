@@ -30,6 +30,7 @@ recordButton.addEventListener('click', () => {
     recordButton.textContent = 'Start Recording';
     playButton.disabled = false;
     downloadButton.disabled = false;
+    uploadButton.disabled = false;
   }
 });
 
@@ -57,6 +58,21 @@ downloadButton.addEventListener('click', () => {
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
   }, 100);
+});
+
+const uploadButton = document.querySelector('button#upload');
+uploadButton.addEventListener('click', () => {
+
+  const blob = new Blob(recordedBlobs, {type: 'video/webm'});
+  const formData = new FormData();
+  formData.append('video', blob);
+
+  fetch('/upload', {
+    method: 'POST',
+    body: formData,
+  }).then(resp => resp.json()).then(resp => {
+    alert(`File uploaded to uploaded/${resp.filename}`);
+  }).catch(console.error)
 });
 
 function handleSourceOpen(event) {
@@ -102,6 +118,7 @@ function startRecording() {
   recordButton.textContent = 'Stop Recording';
   playButton.disabled = true;
   downloadButton.disabled = true;
+  uploadButton.disabled = true;
   mediaRecorder.onstop = (event) => {
     console.log('Recorder stopped: ', event);
   };
